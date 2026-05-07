@@ -77,7 +77,7 @@ source ~/firedrake/bin/activate
 All parameters are centralised in `inputs/simulation_parameters.py`. Key settings:
 
 | Parameter | Description | Default |
-|---|---|---|
+|-----------|-------------|---------|
 | `mesh_file` | Path to the `.msh` mesh file | `inputs/west_uk_mesh.msh` |
 | `bath_error` | Uniform bathymetric perturbation (m) | `0.63` |
 | `manning_bkg` | Background Manning coefficient | `0.024` |
@@ -206,4 +206,5 @@ Each plot shows:
 - A shaded ±1σ uncertainty band (light steel blue) reflecting GP posterior variance.
 - A dashed vertical line marking the unperturbed baseline.
 
+---
 
