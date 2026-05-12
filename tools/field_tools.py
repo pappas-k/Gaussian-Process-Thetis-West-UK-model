@@ -7,8 +7,8 @@ import inputs.simulation_parameters as inputs
 
 
 def transition_field(v1, v2, dist, r1, r2):
-    """ Create a transition field from one extreme value `v1` 
-        at the edge `r1` to another extreme value `v2` at the edge `r2`. 
+    """ Create a transition field from one extreme value `v1`
+        at the edge `r1` to another extreme value `v2` at the edge `r2`.
         `r1` and `r2` conform to the distance metric `dist` and
         `r1` < `r2`.
         :param v1: first extreme value (float)
@@ -19,36 +19,10 @@ def transition_field(v1, v2, dist, r1, r2):
         :return field: the transition field created
     """
     assert r1 < r2, f"Distance {r1} must be smaller than {r2}."
-    return conditional( le(dist, r1), v1, 
+    return conditional( le(dist, r1), v1,
                         conditional( ge(dist, r2), v2,
                                      v2 + (v1 - v2) * (r2 - dist) / (r2 - r1) ) )
 
-
-def gaussian_patch_ridge_x(fnsp, x, y, y0, peak, std, base, xmin, xmax):
-    """ Create a Gaussian patch with a ridge parallel to x-axis (y = const = y0),
-        limited between `xmin` and `xmax`. 
-        The ridge has a maximum value `peak` and minimum value
-        cut-off at `base`. Its shape is Gaussian with a standard deviation
-        (`std`). The formula is:
-        f = exp[-0.5*(y-y0)^2/std^2] / [sqrt(2pi) * std]
-        :param fnsp: function space (Thetis)
-        :param x: x SpatialCoordinate of the mesh (Thetis)
-        :param y: y SpatialCoordinate of the mesh (Thetis)
-        :param y0: centre coordinate of the ridge (float)
-        :param peak: maximum of Gaussian ridge (float)
-        :param std: standard deviation of the Gaussian ridge (float)
-        :param base: minimum level of Gaussian ridge (float)
-        :param xmin: left/west bound of the ridge (float)
-        :param xmax: right/east bound of the ridge (float)
-        :return field: the patch field
-    """
-    assert xmin < xmax, f"Coordinate {xmin} must be smaller than {xmax}."
-    assert base < peak, f"Base level must be lower than peak."
-    field = Function(fnsp, name="gauss").assign(0.)
-    norm = exp(-0.5*(((y - y0) / std)**2))
-    field.interpolate(base + (peak - base) * norm)
-    field.interpolate(conditional(And(ge(x, xmin), le(x, xmax)), field, base) )
-    return field
 
 def gaussian_hump(fnsp, x, y, x0, y0, ang, peak, sd1, sd2, base=0, r1=None, r2=None):
     """ Create a 2-D Gaussian hump given a peak value, a base value,
@@ -103,24 +77,6 @@ def gaussian_hump(fnsp, x, y, x0, y0, ang, peak, sd1, sd2, base=0, r1=None, r2=N
 
     return field
 
-
-def rect_patch(field, val, x, y, xmin, xmax, ymin, ymax):
-    """ Create a rectangular patch with sides parallel to the axes. 
-        :param field: input field (Thetis)
-        :param val: value of the patch (float)
-        :param x: x SpatialCoordinate of the mesh (Thetis)
-        :param y: y SpatialCoordinate of the mesh (Thetis)
-        :param xmin: left/west bound of the patch (float)
-        :param xmax: right/east bound of the patch (float)
-        :param ymin: lower/south bound of the patch (float)
-        :param ymax: upper/north bound of the patch (float)
-        :return: the patch field
-    """
-    field.interpolate(conditional(And(
-                                  And( ge(x, xmin), le(x, xmax)), 
-                                  And( ge(y, ymin), le(y, ymax) )),
-                          val, field) )
-    return field
 
 
 def eik(fnsp, bnd_code, tol=1E-4, outfilename=None):
