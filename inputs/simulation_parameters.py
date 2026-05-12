@@ -94,11 +94,5 @@ ramp_exp_interval      = 1000.   # ramp export interval (s)
 run_exp_interval       = 10000.  # run export interval (s)
 run_exp_elev_interval  = 500     # elevation field export interval for harmonic analysis (s)
 
-# ---------------------------------------------------------------------------
-# Physical constants
-# ---------------------------------------------------------------------------
-grav_acc = 9.807
-density  = 1025
-
 # Tidal constituents for harmonic analysis
 i_constituents = ['M2', 'S2']
