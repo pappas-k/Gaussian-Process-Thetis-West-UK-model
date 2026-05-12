@@ -26,7 +26,7 @@ For each parameter, a Latin Hypercube Sampling (LHS) ensemble of simulations is 
 │   └── ...                        # Mesh, gauge, detector, and forcing data files
 │
 ├── modules/
-│   └── functions.py               # Tidal analysis utilities (peaks, ranges, energy)
+│   └── functions.py               # Tidal analysis utilities (harmonic analysis, peaks, energy)
 │
 ├── tools/
 │   ├── bathymetry.py              # Bathymetry interpolation and smoothing
