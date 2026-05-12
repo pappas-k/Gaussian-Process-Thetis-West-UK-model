@@ -242,11 +242,6 @@ def _get_tidal_ranges(signal):
     return tidal_ranges
 
 
-def ranges(signal):
-    """Return list of tidal ranges for a [time, elevation] signal array."""
-    return _get_tidal_ranges(signal)
-
-
 def theoretical_energy(signal):
     """
     Calculates the total theoretical tidal energy from a tidal elevation signal.
